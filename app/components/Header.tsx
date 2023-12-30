@@ -9,19 +9,15 @@ export const Header = () => {
 
 	const isAuthenticated = getSession();
 
-	const handleTheme = () => {
+	const handleTheme = (isClicked: boolean = false) => {
 		if (typeof window !== "undefined") {
 			const root = document.documentElement;
 			const cache = window.localStorage.getItem("theme");
+
 			if (cache) {
-				root.classList.remove(cache === "dark" ? "light" : "dark");
 				root.classList.add(cache);
 				setThemeIcon(cache === "dark" ? lightMode : darkMode);
-				window.localStorage.setItem(
-					"theme",
-					cache === "dark" ? "light" : "dark"
-				);
-				return;
+				if (!isClicked) return;
 			}
 			const theme = root.classList.contains("dark") ? "light" : "dark";
 			root.classList.remove(theme === "dark" ? "light" : "dark");
@@ -50,7 +46,7 @@ export const Header = () => {
 			<div className="flex flex-row items-center justify-evenly gap-2 md:gap-5 ">
 				<button
 					className="text-sm md:text-2xl hover:scale-110 flex align-middle justify-center"
-					onClick={handleTheme}
+					onClick={() => handleTheme(true)}
 				>
 					<img
 						className="w-5 h-5 md:w-10 md:h-10 text-center"
