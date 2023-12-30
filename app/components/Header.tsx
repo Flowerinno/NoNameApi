@@ -2,9 +2,13 @@ import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import darkMode from "../assets/svg/darkMode.svg";
 import lightMode from "../assets/svg/lightMode.svg";
+import { getSession } from "~/utils";
 
 export const Header = () => {
 	const [themeIcon, setThemeIcon] = useState("");
+
+	const isAuthenticated = getSession();
+
 	const handleTheme = () => {
 		if (typeof window !== "undefined") {
 			const root = document.documentElement;
@@ -31,17 +35,21 @@ export const Header = () => {
 		handleTheme();
 	}, []);
 
+	const styles = {
+		link: "text-sm md:text-2xl hover:scale-110",
+	};
+
 	return (
 		<div className="bg-gray-100 flex flex-row align-middle justify-between w-full p-10 dark:bg-black dark:text-white">
 			<Link
 				to="/"
-				className="flex items-center text-2xl p-1 md:text-4xl text-green-400 cursor-pointer border-transparent border-2 hover:border-green-400 hover:border-2 rounded-md hover:p-1"
+				className="flex items-center text-sm p-1 md:text-2xl text-pink-500 cursor-pointer border-transparent border-2 hover:border-pink-500 hover:border-2 rounded-md hover:p-1"
 			>
-				LOGO
+				NNA
 			</Link>
-			<div className="flex flex-col align-middle justify-center md:flex md:flex-row md:align-middle md:justify-evenly md:gap-5 ">
+			<div className="flex flex-row items-center justify-evenly gap-2 md:gap-5 ">
 				<button
-					className="text-2xl md:text-4xl hover:scale-110 flex align-middle justify-center"
+					className="text-sm md:text-2xl hover:scale-110 flex align-middle justify-center"
 					onClick={handleTheme}
 				>
 					<img
@@ -50,12 +58,19 @@ export const Header = () => {
 						alt="theme"
 					/>
 				</button>
-				<Link className="text-2xl md:text-4xl hover:scale-110" to="/login">
-					sign in
+				<Link className={styles.link} to="/docs">
+					docs
 				</Link>
-				<Link className="text-2xl md:text-4xl hover:scale-110" to="/register">
-					sign up
-				</Link>
+				{!isAuthenticated && (
+					<>
+						<Link className={styles.link} to="/login">
+							sign in
+						</Link>
+						<Link className={styles.link} to="/register">
+							sign up
+						</Link>
+					</>
+				)}
 			</div>
 		</div>
 	);

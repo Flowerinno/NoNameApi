@@ -35,8 +35,13 @@ export const links: LinksFunction = () => [
 	},
 	{ rel: "preconnect", href: "https://fonts.gstatic.com" },
 	{
-		rel: "stylesheet",
+		rel: "preconnect",
 		href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap",
+	},
+	{
+		rel: "icon",
+		type: "image/x-icon",
+		href: "/public/favicon.ico",
 	},
 ];
 

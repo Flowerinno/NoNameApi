@@ -41,9 +41,9 @@ export const Footer = () => {
 					target="_blank"
 					href="https://www.linkedin.com/in/aleksandr-kononov-56b804222/"
 				>
-					By Aleksandr Kononov
+					By Aleksandr Kononov from UA
 				</a>
-				<p className="text-center">© 2024 No Name</p>
+				<p className="text-center">© 2024 No Name API</p>
 			</div>
 		</div>
 	);

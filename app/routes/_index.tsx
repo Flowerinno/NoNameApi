@@ -5,8 +5,8 @@ import { prisma } from "~/server/db/db.server";
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: "No Name Landing" },
-		{ name: "description", content: "Welcome home!" },
+		{ title: "No Name API" },
+		{ name: "description", content: "Free API forever!" },
 	];
 };
 
