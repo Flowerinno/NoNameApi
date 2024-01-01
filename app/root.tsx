@@ -91,6 +91,7 @@ export default function App() {
 			</head>
 			<body style={{ position: "relative" }}>
 				<CookieBanner />
+				<Header />
 				<Outlet />
 				<Footer />
 				<ScrollRestoration />

@@ -6,12 +6,13 @@ import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
 import emailjs from "@emailjs/browser";
 import { Header } from "~/components";
+import { E_Routes } from "~/types";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const isAuth = await authenticateUser(request);
 
 	if (isAuth) {
-		return redirect("/protected");
+		return redirect(E_Routes.home);
 	}
 
 	return json({ message: "Hello, world!" }, { status: 200 });
@@ -71,7 +72,6 @@ export default function Signup() {
 
 	return (
 		<>
-			<Header />
 			<Form
 				method="post"
 				className="text-2xl flex flex-col items-center justify-center min-h-screen md:text-4xl bg-gray-100 gap-5  dark:bg-black dark:text-white"

@@ -58,13 +58,19 @@ export const Header = () => {
 				<Link className={styles.link} to={E_Routes.docs}>
 					docs
 				</Link>
-				{!isAuthenticated && (
+				{!isAuthenticated ? (
 					<>
 						<Link className={styles.link} to={E_Routes.login}>
 							sign in
 						</Link>
 						<Link className={styles.link} to={E_Routes.register}>
 							sign up
+						</Link>
+					</>
+				) : (
+					<>
+						<Link className={styles.link} to={E_Routes.profile}>
+							profile
 						</Link>
 					</>
 				)}

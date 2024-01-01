@@ -37,7 +37,6 @@ export default function EmailVerification() {
 
 	return (
 		<>
-			<Header />
 			<div className="bg-gray-100 text-2xl md:text-4xl dark:bg-black dark:text-white">
 				Your email is verified now, you can{" "}
 				<Link style={{ cursor: "pointer", color: "blue" }} to="/login">

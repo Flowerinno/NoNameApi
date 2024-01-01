@@ -2,23 +2,23 @@ import { Link } from "@remix-run/react";
 
 const links = [
 	{
-		name: "Home",
+		name: "home",
 		path: "/",
 	},
 	{
-		name: "About",
+		name: "about",
 		path: "/about",
 	},
 	{
-		name: "Contact",
+		name: "contact",
 		path: "/contact",
 	},
 	{
-		name: "Login",
+		name: "login",
 		path: "/login",
 	},
 	{
-		name: "Register",
+		name: "register",
 		path: "/register",
 	},
 ];

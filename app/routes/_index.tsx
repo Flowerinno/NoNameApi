@@ -1,7 +1,5 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
-import { Header, Introduce } from "~/components";
-import { prisma } from "~/server/db/db.server";
+import type { MetaFunction } from "@remix-run/node";
+import { Description, Introduce } from "~/components";
 
 export const meta: MetaFunction = () => {
 	return [
@@ -16,8 +14,8 @@ export const meta: MetaFunction = () => {
 export default function Index() {
 	return (
 		<>
-			<Header />
 			<Introduce />
+			<Description />
 		</>
 	);
 }

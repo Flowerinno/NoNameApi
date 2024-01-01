@@ -3,6 +3,19 @@ import { Link } from "@remix-run/react";
 import { Cards } from "./Cards/Cards";
 import { E_Routes } from "~/types";
 
+const links = [
+	{
+		name: "Analytics",
+		link: E_Routes.analytics,
+		class: "text-purple-400",
+	},
+	{
+		name: "Logs",
+		link: E_Routes.logs,
+		class: "text-red-500",
+	},
+];
+
 export const Introduce = () => {
 	return (
 		<div className="p-10 bg-gray-100 flex flex-col align-middle items-center justify-start gap-4 md:gap-6 min-h-screen text-sm md:text-2xl dark:bg-black dark:text-white">
@@ -27,18 +40,15 @@ export const Introduce = () => {
 				<div>
 					<p className="text-green-900">Currently available APIs:</p>
 					<ul className="p-3 dark:text-white">
-						<li>
-							-{" "}
-							<Link className="text-purple-400" to={E_Routes.analytics}>
-								Analytics ☜
-							</Link>
-						</li>
-						<li>
-							-{" "}
-							<Link className="text-red-500" to={E_Routes.logs}>
-								Logs ☜
-							</Link>
-						</li>
+						{links.map((item, i) => {
+							return (
+								<li key={i}>
+									<Link className={item.class} to={item.link}>
+										{item.name} ☜
+									</Link>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 			</div>

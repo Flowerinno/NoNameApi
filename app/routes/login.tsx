@@ -8,12 +8,13 @@ import { Form, useActionData } from "@remix-run/react";
 import { Header } from "~/components";
 import { authenticateUser, loginUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
+import { E_Routes } from "~/types";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const isAuth = await authenticateUser(request);
 
 	if (isAuth) {
-		return redirect("/protected");
+		return redirect(E_Routes.home);
 	}
 
 	return json({ message: "Hello, world!" }, { status: 200 });
@@ -27,7 +28,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 			return json({ ...res });
 		}
 
-		return redirect("/protected", {
+		return redirect(E_Routes.home, {
 			headers: {
 				"Set-Cookie": await commitSession(res.session),
 			},
@@ -42,7 +43,6 @@ export default function Login() {
 
 	return (
 		<>
-			<Header />
 			<Form
 				method="post"
 				className="flex flex-col items-center justify-center min-h-screen text-4xl bg-gray-100 gap-5 dark:bg-black dark:text-white w-full"
