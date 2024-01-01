@@ -45,7 +45,7 @@ export const ProfileSidebar = ({ section }: SidebarProps) => {
 	return (
 		<Form
 			onSubmit={(e) => handleClick(e)}
-			className="w-12/12 md:w-3/12 md:h-full flex flex-row flex-wrap items-center justify-center md:flex md:flex-col md:items-center md:justify-start md:border-r-2 border-black dark:border-white p-2 md:p-5"
+			className="w-12/12 md:w-3/12 min-h-full flex flex-row flex-wrap items-center justify-center md:flex md:flex-col md:items-center md:justify-start md:border-r-2 border-black dark:border-white p-2 md:p-5"
 		>
 			{sidebarItems.map((item, index) => {
 				return (
