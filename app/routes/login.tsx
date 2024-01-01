@@ -51,7 +51,7 @@ export default function Login() {
 					className="text-2xl p-2 rounded-xl dark:text-black w-11/12 md:w-4/12 md:text-4xl"
 					name="email"
 					type="text"
-					placeholder="Email"
+					placeholder="email"
 					required
 				/>
 				<div className="text-2xl rounded-xl dark:text-black w-11/12 md:w-4/12 md:text-4xl">
@@ -59,7 +59,7 @@ export default function Login() {
 						className="outline-none p-2 rounded-xl dark:text-black w-full"
 						name="password"
 						type="text"
-						placeholder="Password"
+						placeholder="password"
 						required
 					/>
 				</div>
@@ -67,7 +67,7 @@ export default function Login() {
 					type="submit"
 					className="text-2xl rounded-xl border-2 p-2 w-40 md:text-4xl"
 				>
-					Login
+					login
 				</button>
 			</Form>
 		</>

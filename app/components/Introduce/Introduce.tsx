@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 
 import { Cards } from "./Cards/Cards";
+import { E_Routes } from "~/types";
 
 export const Introduce = () => {
 	return (
@@ -18,11 +19,28 @@ export const Introduce = () => {
 					Get various APIs that fit your needs with No Name API.{" "}
 					<Link
 						className="text-sm underline-offset-1 text-red-300"
-						to="/register"
+						to={E_Routes.register}
 					>
 						sign up?
 					</Link>
 				</p>
+				<div>
+					<p className="text-green-900">Currently available APIs:</p>
+					<ul className="p-3 dark:text-white">
+						<li>
+							-{" "}
+							<Link className="text-purple-400" to={E_Routes.analytics}>
+								Analytics ☜
+							</Link>
+						</li>
+						<li>
+							-{" "}
+							<Link className="text-red-500" to={E_Routes.logs}>
+								Logs ☜
+							</Link>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	);

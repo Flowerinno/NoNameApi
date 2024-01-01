@@ -81,20 +81,20 @@ export default function Signup() {
 					className="p-2 rounded-xl dark:text-black w-11/12 md:w-4/12"
 					name="name"
 					type="text"
-					placeholder="Name"
+					placeholder="name"
 				/>
 				<input
 					className="p-2 rounded-xl dark:text-black w-11/12 md:w-4/12"
 					name="email"
 					type="text"
-					placeholder="Email"
+					placeholder="email"
 					required
 				/>
 				<input
 					className="p-2 rounded-xl dark:text-black w-11/12 md:w-4/12"
 					name="password"
 					type="text"
-					placeholder="Password"
+					placeholder="password"
 					required
 				/>
 				<button
@@ -102,7 +102,7 @@ export default function Signup() {
 					onClick={() => setErrors("")}
 					className="rounded-xl border-2 p-2 w-40"
 				>
-					Register
+					register
 				</button>
 			</Form>
 		</>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import darkMode from "../assets/svg/darkMode.svg";
 import lightMode from "../assets/svg/lightMode.svg";
 import { getSession } from "~/utils";
+import { E_Routes } from "~/types";
 
 export const Header = () => {
 	const [themeIcon, setThemeIcon] = useState("");
@@ -38,7 +39,7 @@ export const Header = () => {
 	return (
 		<div className="bg-gray-100 flex flex-row align-middle justify-between w-full p-10 dark:bg-black dark:text-white">
 			<Link
-				to="/"
+				to={E_Routes.home}
 				className="flex items-center text-sm p-1 md:text-2xl text-pink-500 cursor-pointer border-transparent border-2 hover:border-pink-500 hover:border-2 rounded-md hover:p-1"
 			>
 				NNA
@@ -54,15 +55,15 @@ export const Header = () => {
 						alt="theme"
 					/>
 				</button>
-				<Link className={styles.link} to="/docs">
+				<Link className={styles.link} to={E_Routes.docs}>
 					docs
 				</Link>
 				{!isAuthenticated && (
 					<>
-						<Link className={styles.link} to="/login">
+						<Link className={styles.link} to={E_Routes.login}>
 							sign in
 						</Link>
-						<Link className={styles.link} to="/register">
+						<Link className={styles.link} to={E_Routes.register}>
 							sign up
 						</Link>
 					</>

@@ -25,7 +25,7 @@ const links = [
 
 export const Footer = () => {
 	return (
-		<div className="flex flex-col items-center justify-center p-5 md:h-40 md:flex md:flex-row md:items-center md:justify-around dark:bg-gray-950">
+		<div className="flex flex-col items-center justify-center p-5 md:flex md:flex-row md:items-center md:justify-around dark:bg-gray-950">
 			<div className="p-6 flex flex-wrap w-56 gap-3 dark:text-white ">
 				{links.map((link) => {
 					return (

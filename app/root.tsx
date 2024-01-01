@@ -5,7 +5,6 @@ import {
 	type LoaderFunctionArgs,
 } from "@remix-run/node";
 import {
-	Link,
 	Links,
 	LiveReload,
 	Meta,
@@ -18,6 +17,8 @@ import styles from "./tailwind.css";
 import { authenticateUser } from "./server/auth/auth.server";
 import { Footer } from "./components/Footer";
 import { CookieBanner, Header } from "./components";
+
+import errorPage from "./assets/images/errorPage.png";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "No name other" }];
@@ -54,20 +55,29 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	return null;
 };
 
-// export const ErrorBoundary = ({ error }: { error: Error }) => {
-// 	return (
-// 		<>
-// 			<Header />
-// 			<div className="bg-gray-100 flex flex-col items-center justify-center min-h-screen text-2xl md:text-4xl gap-5 dark:bg-black dark:text-white">
-// 				<h1 className="">Something went wrong</h1>
-// 				<p className="">Please try again later</p>
-// 				<Link className="no-underline" to="/">
-// 					Go back to home
-// 				</Link>
-// 			</div>
-// 		</>
-// 	);
-// };
+export const ErrorBoundary = ({ error }: { error: Error }) => {
+	return (
+		<html style={{ minHeight: "100vh" }}>
+			<head>
+				<title>Oh no!</title>
+				<Meta />
+				<Links />
+			</head>
+			<body style={{ minHeight: "100vh" }}>
+				<div style={{ display: "flex", flexDirection: "column" }}>
+					<Header />
+					<img
+						style={{ height: "100vh", objectFit: "contain" }}
+						src={errorPage}
+						alt="error page"
+					/>
+					<Footer />
+				</div>
+				<Scripts />
+			</body>
+		</html>
+	);
+};
 
 export default function App() {
 	return (
