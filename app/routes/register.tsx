@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
 import emailjs from "@emailjs/browser";
-import { Header } from "~/components";
 import { E_Routes } from "~/types";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -20,7 +19,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export async function action({ request }: ActionFunctionArgs) {
 	const res = await registerUser(request);
+
 	const { session, ...rest } = res;
+
 	if (session) {
 		return json(
 			{ data: session.data, ...rest },
@@ -61,8 +62,7 @@ export default function Signup() {
 
 		return (
 			<>
-				<Header />
-				<div className="flex flex-col items-center justify-center min-h-screen text-2xl md:text-4xl dark:bg-black dark:text-white gap-5">
+				<div className="flex flex-col items-center justify-center min-h-screen text-2xl md:text-4xl dark:bg-black dark:text-white gap-5 p-3">
 					<h1>You have successfully registered</h1>
 					<p>Please verify your email with a letter we've just sent you.</p>
 				</div>

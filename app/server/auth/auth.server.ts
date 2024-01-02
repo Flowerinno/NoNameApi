@@ -37,7 +37,7 @@ export const loginUser = async (request: Request) => {
 	if (!user) {
 		return {
 			status: STATUS_CODE.NOT_FOUND,
-			message: ERRORS.NOT_FOUND,
+			message: ERRORS.USER_NOT_FOUND,
 			isError: true,
 		};
 	}
@@ -47,7 +47,7 @@ export const loginUser = async (request: Request) => {
 	if (!passwordMatch) {
 		return {
 			status: STATUS_CODE.UNAUTHORIZED,
-			message: ERRORS.UNAUTHORIZED,
+			message: ERRORS.INVALID_CREDENTIALS,
 			isError: true,
 		};
 	}

@@ -1,47 +1,40 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { useLoaderData } from "react-router";
-import { Header } from "~/components";
 import { prisma } from "~/server/db/db.server";
+import { E_Routes } from "~/types";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-	// const userId = params.userId;
+	const userId = params.userId;
 
-	// if (!userId) redirect("/login", { status: 401 });
+	if (!userId) redirect(E_Routes.login, { status: 401 });
 
-	// const user = await prisma.user.findUnique({
-	// 	where: {
-	// 		id: userId,
-	// 	},
-	// });
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
+	});
 
-	// if (!user || user.isUserVerified) {
-	// 	redirect("/login", { status: 401 });
-	// }
+	if (!user || user.isUserVerified) {
+		redirect(E_Routes.login, { status: 401 });
+	}
 
-	// const updatedUser = await prisma.user.update({
-	// 	where: {
-	// 		id: userId,
-	// 	},
-	// 	data: {
-	// 		isUserVerified: true,
-	// 	},
-	// });
+	const updatedUser = await prisma.user.update({
+		where: {
+			id: userId,
+		},
+		data: {
+			isUserVerified: true,
+		},
+	});
 
-	// return { isUpdated: updatedUser.isUserVerified };
-	return { isUpdated: true };
+	return { isUpdated: updatedUser.isUserVerified };
 };
 
 export default function EmailVerification() {
-	const data = useLoaderData();
-
 	return (
 		<>
-			<div className="bg-gray-100 text-2xl md:text-4xl dark:bg-black dark:text-white">
-				Your email is verified now, you can{" "}
-				<Link style={{ cursor: "pointer", color: "blue" }} to="/login">
-					login
-				</Link>
+			<div className="flex flex-row items-center justify-center gap-2 bg-gray-100 text-2xl min-h-screen md:text-4xl dark:bg-black dark:text-white">
+				Your email is verified now, enjoy using the API
 			</div>
 		</>
 	);

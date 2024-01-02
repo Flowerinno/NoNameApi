@@ -6,7 +6,6 @@ import {
 } from "@remix-run/node";
 import { Form, useActionData, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
-import { Header } from "~/components";
 import { authenticateUser, loginUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
 import { E_Routes } from "~/types";
@@ -31,7 +30,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		}
 
 		if (session)
-			return json(rest, {
+			return redirect(E_Routes.home, {
 				headers: {
 					"Set-Cookie": await commitSession(session),
 				},
@@ -43,22 +42,18 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function Login() {
 	const data = useActionData<typeof action>();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (data && !data?.isError) {
-			navigate(E_Routes.home, {
-				replace: true,
-			});
-		}
-	}, []);
 
 	return (
 		<>
 			<Form
 				method="post"
-				className="flex flex-col items-center justify-center min-h-screen text-4xl bg-gray-100 gap-5 dark:bg-black dark:text-white w-full"
+				className="flex flex-col items-center justify-center min-h-screen text-4xl bg-gray-100 gap-5 dark:bg-black dark:text-white w-full p-5"
 			>
+				{typeof data?.message === "string" && (
+					<h3 className="p-2 h-10 text-2xl rounded-xl dark:text-white md:text-4xl">
+						{data?.message}
+					</h3>
+				)}
 				<input
 					className="text-2xl p-2 rounded-xl dark:text-black w-11/12 md:w-4/12 md:text-4xl"
 					name="email"

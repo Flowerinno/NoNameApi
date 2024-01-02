@@ -21,6 +21,7 @@ model User {
   isUserVerified Boolean       @default(false)
   isSubscribed   Boolean       @default(false)
   Subscription   Subscription?
+  apiKey         String        @unique @default(uuid())
 }
 
 model Subscription {
