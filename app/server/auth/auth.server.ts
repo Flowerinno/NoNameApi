@@ -21,6 +21,7 @@ export const loginUser = async (request: Request) => {
 		return {
 			status: STATUS_CODE.BAD_REQUEST,
 			message: ERRORS.BAD_REQUEST,
+			isError: true,
 		};
 	}
 
@@ -37,6 +38,7 @@ export const loginUser = async (request: Request) => {
 		return {
 			status: STATUS_CODE.NOT_FOUND,
 			message: ERRORS.NOT_FOUND,
+			isError: true,
 		};
 	}
 
@@ -46,6 +48,7 @@ export const loginUser = async (request: Request) => {
 		return {
 			status: STATUS_CODE.UNAUTHORIZED,
 			message: ERRORS.UNAUTHORIZED,
+			isError: true,
 		};
 	}
 
@@ -55,6 +58,7 @@ export const loginUser = async (request: Request) => {
 		status: 200,
 		message: "Logged in",
 		session,
+		isError: false,
 	};
 };
 

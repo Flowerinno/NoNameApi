@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import darkMode from "../assets/svg/darkMode.svg";
 import lightMode from "../assets/svg/lightMode.svg";
@@ -7,7 +7,7 @@ import { E_Routes } from "~/types";
 
 export const Header = () => {
 	const [themeIcon, setThemeIcon] = useState("");
-
+	const location = useLocation();
 	const isAuthenticated = getSession();
 
 	const handleTheme = (isClicked: boolean = false) => {
@@ -30,7 +30,7 @@ export const Header = () => {
 
 	useEffect(() => {
 		handleTheme();
-	}, []);
+	}, [location.pathname]);
 
 	const styles = {
 		link: "text-sm md:text-2xl hover:scale-110",

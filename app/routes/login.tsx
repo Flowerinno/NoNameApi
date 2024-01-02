@@ -4,7 +4,8 @@ import {
 	LoaderFunctionArgs,
 	redirect,
 } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useNavigate } from "@remix-run/react";
+import { useEffect } from "react";
 import { Header } from "~/components";
 import { authenticateUser, loginUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
@@ -23,23 +24,34 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
 	try {
 		const res = await loginUser(request);
+		const { session, ...rest } = res;
 
-		if (res.status !== 200) {
-			return json({ ...res });
+		if (res.isError) {
+			return json({ ...res, isError: true });
 		}
 
-		return redirect(E_Routes.home, {
-			headers: {
-				"Set-Cookie": await commitSession(res.session),
-			},
-		});
+		if (session)
+			return json(rest, {
+				headers: {
+					"Set-Cookie": await commitSession(session),
+				},
+			});
 	} catch (error) {
-		return json({ message: error }, { status: 400 });
+		return json({ message: error, isError: true }, { status: 400 });
 	}
 };
 
 export default function Login() {
 	const data = useActionData<typeof action>();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (data && !data?.isError) {
+			navigate(E_Routes.home, {
+				replace: true,
+			});
+		}
+	}, []);
 
 	return (
 		<>

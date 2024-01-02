@@ -4,7 +4,7 @@ export enum E_Routes {
 	contact = "/contact",
 	login = "/login",
 	register = "/register",
-	profile = "/profile",
+	profile = "/profile?section=profile",
 	admin = "/admin",
 	docs = "/docs",
 	logs = "/docs/logs",
