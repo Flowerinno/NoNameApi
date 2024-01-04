@@ -1,9 +1,9 @@
-import { Form, useSubmit } from "@remix-run/react";
-import Cookies from "js-cookie";
+import { useFetcher, useSubmit } from "@remix-run/react";
 import { useState } from "react";
 
 export const Settings = () => {
 	const submit = useSubmit();
+	const fetcher = useFetcher();
 	//TODO add user avatar
 	const [avatar, setAvatar] = useState("");
 	const [isKeyShouldBeUpdated, setIsKeyShouldBeUpdated] = useState(false);
@@ -15,7 +15,7 @@ export const Settings = () => {
 	};
 
 	const styles = {
-		li: "w-full flex flex-col items-start border-2 border-black dark:border-white p-2 rounded-sm",
+		li: "w-full flex flex-col items-start gap-1 border-2 border-black dark:border-white p-2 rounded-sm",
 		button:
 			"hover:text-green-500 hover:border-2 hover:border-green-500 p-1 rounded-md",
 	};
@@ -32,15 +32,12 @@ export const Settings = () => {
 				action: "/delete",
 			});
 		}
-		// setTimeout(() => {
-		// 	Cookies.remove("__session");
-		// 	console.log("cookie deleted");
-		// }, 500);
 	};
 
 	return (
 		<>
-			<Form
+			{fetcher.data && <h2 className="font-bold">profile is updated</h2>}
+			<fetcher.Form
 				action="/settings"
 				method="POST"
 				className="flex flex-col items-center justify-center gap-5"
@@ -55,22 +52,26 @@ export const Settings = () => {
 							onChange={(e) => handleAvatarUpload(e)}
 						/>
 					</li>
-					<li className="w-full flex flex-row items-center justify-between border-2 border-black dark:border-white p-2 rounded-sm">
-						<label htmlFor="isKeyShouldBeUpdated">update api key</label>
+					<li
+						className="w-full flex flex-row items-center justify-between border-2 border-black dark:border-white p-2 rounded-sm cursor-pointer"
+						onClick={() => setIsKeyShouldBeUpdated(!isKeyShouldBeUpdated)}
+					>
+						<span className="cursor-pointer">update api key</span>
 						<input
 							name="isKeyShouldBeUpdated"
 							type="checkbox"
+							defaultChecked={false}
 							checked={isKeyShouldBeUpdated}
 							value={isKeyShouldBeUpdated.toString()}
-							onChange={() => setIsKeyShouldBeUpdated(!isKeyShouldBeUpdated)}
 						/>
 					</li>
 					<li className={styles.li}>
 						<label htmlFor="password">change password</label>
 						<input
 							name="password"
-							className="border-2 border-black bg-black text-black dark:text-white dark:border-white rounded-md w-full"
+							className="border-2 border-black bg-black text-black dark:text-white dark:border-white rounded-md w-full p-1"
 							type="text"
+							placeholder="new password"
 						/>
 					</li>
 				</ul>
@@ -80,8 +81,8 @@ export const Settings = () => {
 				>
 					save
 				</button>
-			</Form>
-			<Form
+			</fetcher.Form>
+			<fetcher.Form
 				onSubmit={(e) => {
 					deleteHanlder(e);
 				}}
@@ -89,7 +90,7 @@ export const Settings = () => {
 				<button className="text-red-500 p-1" name="delete" type="submit">
 					delete my account
 				</button>
-			</Form>
+			</fetcher.Form>
 		</>
 	);
 };

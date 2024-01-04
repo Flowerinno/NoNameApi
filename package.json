@@ -23,7 +23,8 @@
 		"js-cookie": "^3.0.5",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"tailwindcss-animated": "^1.0.1"
+		"tailwindcss-animated": "^1.0.1",
+		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
 		"@nx/remix": "^17.0.0",
@@ -32,6 +33,7 @@
 		"@types/bcrypt": "^5.0.2",
 		"@types/react": "^18.2.20",
 		"@types/react-dom": "^18.2.7",
+		"@types/uuid": "^9.0.7",
 		"eslint": "^8.38.0",
 		"nx": "17.2.4",
 		"prisma": "^5.7.0",

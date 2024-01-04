@@ -5,6 +5,8 @@ type SessionData = {
 	name: string;
 	email: string;
 	isSubscribed: boolean;
+	apiKey: string;
+	avatar?: string;
 };
 
 const { getSession, commitSession, destroySession } =

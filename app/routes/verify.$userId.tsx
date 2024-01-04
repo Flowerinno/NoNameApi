@@ -1,5 +1,4 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { Link } from "@remix-run/react";
 import { prisma } from "~/server/db/db.server";
 import { E_Routes } from "~/types";
 
