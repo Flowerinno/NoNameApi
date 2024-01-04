@@ -1,6 +1,6 @@
 import { json, redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
@@ -38,6 +38,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Signup() {
 	const data = useActionData<typeof action>();
+	const fetcher = useFetcher();
 	const [errors, setErrors] = useState("");
 
 	useEffect(() => {
@@ -67,7 +68,7 @@ export default function Signup() {
 
 	return (
 		<>
-			<Form
+			<fetcher.Form
 				method="post"
 				className="text-2xl flex flex-col items-center justify-center min-h-screen md:text-4xl bg-gray-100 gap-5  dark:bg-black dark:text-white"
 			>
@@ -99,7 +100,7 @@ export default function Signup() {
 				>
 					register
 				</button>
-			</Form>
+			</fetcher.Form>
 		</>
 	);
 }
