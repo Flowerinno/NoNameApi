@@ -22,7 +22,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
 	return (
 		<div className="p-10 bg-gray-100 flex flex-col align-middle items-center justify-start gap-4 md:gap-6 text-sm md:text-2xl dark:bg-black dark:text-white">
-			<div className="w-full flex flex-col gap-10">
+			<div className="w-full flex flex-col gap-10 items-center justify-center">
 				<Introduce />
 				<Description />
 			</div>

@@ -18,14 +18,14 @@ const links = [
 
 export const Introduce = () => {
 	return (
-		<div className="bg-gray-100 flex flex-col align-middle items-center justify-start gap-4 md:gap-6 text-sm md:text-2xl dark:bg-black dark:text-white">
-			<h1 className="bg-clip-text text-transparent text-4xl mb-5 self-start md:self-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-fade-right">
-				Free API forever
+		<div className="bg-gray-100 flex flex-col align-middle items-center justify-start gap-4 md:gap-6 text-sm md:text-2xl dark:bg-black dark:text-white max-w-4xl">
+			<h1 className="bg-clip-text text-transparent text-4xl text-bold mb-5 self-start md:self-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-fade-right">
+				FREE API FOREVER
 			</h1>
 			<div className="flex flex-col gap-5 md:gap-9 items-start">
 				<p>
-					No Name API is a free service for everyone. You can use it for free
-					without any limits.
+					<strong>No Name API </strong> is a free service for everyone and
+					everywhere. You can use it for free without any limits.
 				</p>
 				<Cards />
 				<div>
@@ -37,9 +37,9 @@ export const Introduce = () => {
 						sign up?
 					</Link>
 				</div>
-				<div>
-					<p className="text-green-900">Currently available APIs:</p>
-					<ul className="p-3 dark:text-white">
+				<div className="flex flex-col gap-3">
+					<p>Currently available APIs:</p>
+					<ul className=" dark:text-white flex flex-row flex-wrap gap-5">
 						{links.map((item, i) => {
 							return (
 								<li key={i}>
