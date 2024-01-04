@@ -1,6 +1,6 @@
 import { json, redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
@@ -47,24 +47,19 @@ export default function Signup() {
 	}, [data?.status]);
 
 	if (data?.status === 201) {
-		emailjs.init("3UCla_TYikTJ-Qo77");
-		const templateParams = {
-			name: data?.data.name,
-			email: data?.data.email,
-			link: `http://localhost:3000/verify/${data.data.userId}`,
-		};
-		emailjs.send(
-			"service_iy2j8nu",
-			"template_t2d1yhx",
-			templateParams,
-			"3UCla_TYikTJ-Qo77"
-		);
-
 		return (
 			<>
 				<div className="flex flex-col items-center justify-center min-h-screen text-2xl md:text-4xl dark:bg-black dark:text-white gap-5 p-3">
 					<h1>You have successfully registered</h1>
-					<p>Please verify your email with a letter we've just sent you.</p>
+					<p>
+						Please verify your email by clicking{" "}
+						<Link
+							className="text-2xl md:text-4xl text-blue-500"
+							to={`/verify/${data.data.userId}`}
+						>
+							the link
+						</Link>
+					</p>
 				</div>
 			</>
 		);
