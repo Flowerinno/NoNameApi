@@ -21,6 +21,7 @@ import { CookieBanner, Header } from "./components";
 
 import errorPage from "./assets/images/errorPage.png";
 import { prisma } from "./server/db/db.server";
+import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "No name other" }];
@@ -110,6 +111,7 @@ export default function App() {
 				/>
 				<Outlet />
 				<Footer />
+				<SpeedInsights />
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />
