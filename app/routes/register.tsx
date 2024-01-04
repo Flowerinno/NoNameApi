@@ -51,7 +51,7 @@ export default function Signup() {
 			<>
 				<div className="flex flex-col items-center justify-center min-h-screen text-2xl md:text-4xl dark:bg-black dark:text-white gap-5 p-3">
 					<h1>You have successfully registered</h1>
-					<p>
+					<div>
 						Please verify your email by clicking{" "}
 						<Link
 							className="text-2xl md:text-4xl text-blue-500"
@@ -59,7 +59,7 @@ export default function Signup() {
 						>
 							the link
 						</Link>
-					</p>
+					</div>
 				</div>
 			</>
 		);

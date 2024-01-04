@@ -9,4 +9,7 @@ export enum E_Routes {
 	docs = "/docs",
 	logs = "/docs/logs",
 	analytics = "/docs/analytics",
+	about = "/about",
+	privacy = "/privacy",
+	terms = "/terms",
 }

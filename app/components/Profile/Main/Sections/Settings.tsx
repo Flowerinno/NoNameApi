@@ -61,6 +61,7 @@ export const Settings = () => {
 							name="isKeyShouldBeUpdated"
 							type="checkbox"
 							defaultChecked={false}
+							onChange={() => null}
 							checked={isKeyShouldBeUpdated}
 							value={isKeyShouldBeUpdated.toString()}
 						/>
