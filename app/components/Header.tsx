@@ -2,13 +2,16 @@ import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import darkMode from "../assets/svg/darkMode.svg";
 import lightMode from "../assets/svg/lightMode.svg";
-import { getSession } from "~/utils";
 import { E_Routes } from "~/types";
 
-export const Header = () => {
+interface HeaderProps {
+	isAuthenticated?: boolean;
+	userData: any;
+}
+
+export const Header = ({ userData, isAuthenticated = false }: HeaderProps) => {
 	const [themeIcon, setThemeIcon] = useState("");
 	const location = useLocation();
-	const isAuthenticated = getSession();
 
 	const handleTheme = (isClicked: boolean = false) => {
 		if (typeof window !== "undefined") {
@@ -70,7 +73,7 @@ export const Header = () => {
 				) : (
 					<>
 						<Link className={styles.link} to={E_Routes.profile}>
-							profile
+							{isAuthenticated && userData?.name ? userData.name : "profile"}	
 						</Link>
 					</>
 				)}

@@ -4,14 +4,16 @@ import { ERRORS, STATUS_CODE } from "./types";
 import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
 
-export const authenticateUser = async (request: Request): Promise<Boolean> => {
+export const authenticateUser = async (
+	request: Request
+): Promise<string | undefined> => {
 	const session = await getSession(request.headers.get("Cookie"));
 
 	if (!session.get("userId")) {
-		return false;
+		return;
 	}
 
-	return true;
+	return session.data.userId;
 };
 
 export const loginUser = async (request: Request) => {

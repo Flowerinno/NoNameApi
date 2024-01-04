@@ -11,6 +11,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useLoaderData,
 } from "@remix-run/react";
 
 import styles from "./tailwind.css";
@@ -19,6 +20,7 @@ import { Footer } from "./components/Footer";
 import { CookieBanner, Header } from "./components";
 
 import errorPage from "./assets/images/errorPage.png";
+import { prisma } from "./server/db/db.server";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "No name other" }];
@@ -47,12 +49,21 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const isAuth = authenticateUser(request);
+	const userId = await authenticateUser(request);
 
-	if (!isAuth) {
-		return json({ isAuth: false });
+	if (userId) {
+		const user = await prisma.user.findUnique({
+			where: {
+				id: userId,
+			},
+		});
+
+		if (user) {
+			const { password, ...rest } = user;
+			return json({ userData: rest, isAuthenticated: true });
+		}
 	}
-	return null;
+	return json({ userData: null, isAuthenticated: false });
 };
 
 export const ErrorBoundary = ({ error }: { error: Error }) => {
@@ -65,7 +76,7 @@ export const ErrorBoundary = ({ error }: { error: Error }) => {
 			</head>
 			<body style={{ minHeight: "100vh" }}>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					<Header />
+					<Header userData={null} />
 					<img
 						style={{ height: "100vh", objectFit: "contain" }}
 						src={errorPage}
@@ -80,6 +91,8 @@ export const ErrorBoundary = ({ error }: { error: Error }) => {
 };
 
 export default function App() {
+	const data = useLoaderData<typeof loader>();
+
 	return (
 		<html lang="en">
 			<head>
@@ -91,7 +104,10 @@ export default function App() {
 			</head>
 			<body style={{ position: "relative" }}>
 				<CookieBanner />
-				<Header />
+				<Header
+					userData={data.userData}
+					isAuthenticated={data.isAuthenticated}
+				/>
 				<Outlet />
 				<Footer />
 				<ScrollRestoration />

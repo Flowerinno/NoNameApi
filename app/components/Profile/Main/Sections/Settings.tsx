@@ -4,15 +4,7 @@ import { useState } from "react";
 export const Settings = () => {
 	const submit = useSubmit();
 	const fetcher = useFetcher();
-	//TODO add user avatar
-	const [avatar, setAvatar] = useState("");
 	const [isKeyShouldBeUpdated, setIsKeyShouldBeUpdated] = useState(false);
-
-	const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const img = e.target.files?.[0];
-		if (!img) return;
-		setAvatar(img.name);
-	};
 
 	const styles = {
 		li: "w-full flex flex-col items-start gap-1 border-2 border-black dark:border-white p-2 rounded-sm",
@@ -40,18 +32,9 @@ export const Settings = () => {
 			<fetcher.Form
 				action="/settings"
 				method="POST"
-				className="flex flex-col items-center justify-center gap-5"
+				className="flex flex-col items-center justify-center gap-5 w-full"
 			>
-				<ul className="flex flex-col items-start justify-center gap-5 p-3">
-					<li className={styles.li}>
-						<label htmlFor="avatar">change avatar</label>
-						<input
-							className="rounded-md w-full p-1"
-							type="file"
-							accept="image/png, image/jpeg, image/jpg"
-							onChange={(e) => handleAvatarUpload(e)}
-						/>
-					</li>
+				<ul className="flex flex-col items-start justify-center gap-5 p-3 w-8/12">
 					<li
 						className="w-full flex flex-row items-center justify-between border-2 border-black dark:border-white p-2 rounded-sm cursor-pointer"
 						onClick={() => setIsKeyShouldBeUpdated(!isKeyShouldBeUpdated)}
@@ -60,7 +43,6 @@ export const Settings = () => {
 						<input
 							name="isKeyShouldBeUpdated"
 							type="checkbox"
-							defaultChecked={false}
 							onChange={() => null}
 							checked={isKeyShouldBeUpdated}
 							value={isKeyShouldBeUpdated.toString()}

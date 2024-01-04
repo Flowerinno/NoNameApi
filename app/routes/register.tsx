@@ -1,17 +1,15 @@
 import { json, redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link, useActionData, useFetcher } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
-import emailjs from "@emailjs/browser";
-import { E_Routes } from "~/types";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const isAuth = await authenticateUser(request);
+	const userId = await authenticateUser(request);
 
-	if (isAuth) {
-		return redirect(E_Routes.home);
+	if (userId) {
+		return redirect(`/verify/${userId}`);
 	}
 
 	return json({ message: "Hello, world!" }, { status: 200 });
@@ -24,7 +22,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 	if (session) {
 		return json(
-			{ data: session.data, ...rest },
+			{ userId: session.get("userId"), ...rest },
 			{
 				headers: {
 					"Set-Cookie": await commitSession(res.session),
@@ -33,17 +31,17 @@ export async function action({ request }: ActionFunctionArgs) {
 		);
 	}
 
-	return json(res);
+	return json({ ...res, userId: null });
 }
 
 export default function Signup() {
-	const data = useActionData<typeof action>();
-	const fetcher = useFetcher();
+	const fetcher = useFetcher<typeof action>();
 	const [errors, setErrors] = useState("");
+	const data = fetcher.data;
 
 	useEffect(() => {
 		if (data?.status && data?.status !== 201) {
-			setErrors(data?.message ?? "Something went wrong");
+			setErrors("Something went wrong");
 		}
 	}, [data?.status]);
 
@@ -56,7 +54,7 @@ export default function Signup() {
 						Please verify your email by clicking{" "}
 						<Link
 							className="text-2xl md:text-4xl text-blue-500"
-							to={`/verify/${data.data.userId}`}
+							to={`/verify/${data?.userId}`}
 						>
 							the link
 						</Link>

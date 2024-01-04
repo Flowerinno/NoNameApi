@@ -33,7 +33,7 @@ export default function EmailVerification() {
 	return (
 		<>
 			<div className="flex flex-row items-center justify-center gap-2 bg-gray-100 text-2xl min-h-screen md:text-4xl dark:bg-black dark:text-white">
-				Your email is verified now, enjoy using the API
+				Your email is verified, enjoy using the API
 			</div>
 		</>
 	);
