@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 let prisma: PrismaClient;
 
@@ -16,3 +17,37 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export { prisma };
+
+//add admin
+
+prisma.user
+	.findUnique({
+		where: {
+			email: "akellastoopi@gmail.com",
+		},
+	})
+	.then((user) => {
+		if (user) {
+			console.log("Admin already exists");
+			return;
+		}
+
+		prisma.user.create({
+			//admin
+			data: {
+				email: "akellastoopi@gmail.com",
+				name: "Aleksandr",
+				password: bcrypt.hashSync("1234", 10),
+				role: "ADMIN",
+			},
+		});
+
+		prisma.user.create({
+			//non-admin
+			data: {
+				email: "test@gmail.com",
+				name: "Test",
+				password: bcrypt.hashSync("1234", 10),
+			},
+		});
+	});

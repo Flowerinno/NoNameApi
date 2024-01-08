@@ -8,6 +8,7 @@
 		"dev": "remix dev --manual",
 		"start": "remix-serve ./build/index.js",
 		"typecheck": "tsc",
+		"pushgen": "npx prisma db push & npx prisma generate",
 		"postinstall": "prisma db push & prisma generate"
 	},
 	"dependencies": {
