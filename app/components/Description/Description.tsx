@@ -25,10 +25,9 @@ export const Description = () => {
 						consistently.
 					</li>
 					<li className="w-full md:w-56">
-						<strong>Community Support: </strong>Community Support: Join a
-						vibrant community of developers using No Name API. Share
-						experiences, ask questions, and collaborate to enhance your
-						development journey.
+						<strong>Community Support: </strong> Join a vibrant community of
+						developers using No Name API. Share experiences, ask questions, and
+						collaborate to enhance your development journey.
 					</li>
 				</ul>
 				<Link

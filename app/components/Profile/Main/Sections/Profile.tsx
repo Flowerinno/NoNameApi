@@ -14,8 +14,8 @@ const styles = {
 };
 
 export const Profile = ({ userData }: ProfileProps) => {
-	const copy = () => {
-		navigator.clipboard.writeText(userData?.apiKey ?? "");
+	const copy = async () => {
+		await navigator.clipboard.writeText(userData?.apiKey ?? "");
 		alert("copied to clipboard");
 	};
 

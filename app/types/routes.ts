@@ -7,9 +7,12 @@ export enum E_Routes {
 	profile = "/profile?section=profile",
 	admin = "/admin",
 	docs = "/docs",
-	logs = "/docs/logs",
-	analytics = "/docs/analytics",
 	about = "/about",
 	privacy = "/privacy",
 	terms = "/terms",
+	//DOCS
+	getting_started = "/docs?section=getting-started",
+	introduction = "/docs?section=introduction",
+	logs = "/docs?section=logs",
+	analytics = "/docs?section=analytics",
 }

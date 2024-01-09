@@ -8,13 +8,11 @@ import { Form, useActionData } from "@remix-run/react";
 import { authenticateUser, loginUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
 import { E_Routes } from "~/types";
-import googleBtn from "../assets/images/google.png";
-import { SocialsProvider } from "remix-auth-socials";
 import { Social } from "~/components";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const isAuth = await authenticateUser(request);
-	console.log(isAuth);
+
 	if (isAuth) {
 		return redirect(E_Routes.home);
 	}
