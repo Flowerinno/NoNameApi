@@ -7,6 +7,7 @@ export enum ERRORS {
 	BAD_REQUEST = "Bad Request",
 	INTERNAL_SERVER_ERROR = "Internal Server Error",
 	USER_EXISTS = "User already exists",
+	REGISTERED_BY_GOOGLE = "User registered via google auth",
 }
 
 export enum STATUS_CODE {

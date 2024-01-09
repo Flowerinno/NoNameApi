@@ -1,5 +1,4 @@
 import { Form, useSubmit } from "@remix-run/react";
-import Cookies from "js-cookie";
 
 //mocked
 const sidebarItems = [
@@ -34,8 +33,7 @@ interface SidebarProps {
 
 export const ProfileSidebar = ({ section }: SidebarProps) => {
 	const submit = useSubmit();
-	const cookies = Cookies.get("__session");
-	// label: SidebarLabels
+
 	const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
 		submit(e.target as HTMLButtonElement, {
 			method: "GET",
@@ -45,12 +43,12 @@ export const ProfileSidebar = ({ section }: SidebarProps) => {
 	return (
 		<Form
 			onSubmit={(e) => handleClick(e)}
-			className="w-12/12 md:w-3/12 min-h-full flex flex-row flex-wrap items-center justify-center md:flex md:flex-col md:items-center md:justify-start md:border-r-2 border-black dark:border-white p-2 md:p-5"
+			className="w-12/12 md:w-3/12 min-h-full flex flex-row flex-wrap items-center justify-center md:flex md:flex-col md:items-center md:justify-start md:border-r-2 border-black dark:border-white p-1"
 		>
 			{sidebarItems.map((item, index) => {
 				return (
 					<button
-						className={`text-sm md:text-2xl flex flex-row items-start justify-start gap-2 hover:bg-gray-400 cursor-pointer p-2 rounded-md min-w-12 md:w-40 dark:hover:bg-slate-400`}
+						className={`text-sm md:text-2xl flex flex-row items-start justify-start gap-2 hover:bg-gray-400 cursor-pointer p-2 rounded-md min-full md:w-36 dark:hover:bg-slate-400`}
 						key={index}
 						name="sidebar"
 						value={item.label}

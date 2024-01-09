@@ -44,7 +44,15 @@ export const loginUser = async (request: Request) => {
 		};
 	}
 
-	const passwordMatch = await bcrypt.compare(password, user.password);
+	if (!user?.password) {
+		return {
+			status: STATUS_CODE.NOT_FOUND,
+			message: ERRORS.REGISTERED_BY_GOOGLE,
+			isError: true,
+		};
+	}
+
+	const passwordMatch = bcrypt.compare(password, user?.password);
 
 	if (!passwordMatch) {
 		return {

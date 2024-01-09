@@ -73,7 +73,7 @@ export const Header = ({ userData, isAuthenticated = false }: HeaderProps) => {
 				) : (
 					<>
 						<Link className={styles.link} to={E_Routes.profile}>
-							{isAuthenticated && userData?.name ? userData.name : "profile"}	
+							{isAuthenticated && userData?.name ? userData.name : "profile"}
 						</Link>
 					</>
 				)}

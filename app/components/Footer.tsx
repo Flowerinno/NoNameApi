@@ -40,7 +40,6 @@ export const Footer = () => {
 	return (
 		<div className="flex flex-col items-center justify-center p-5 md:flex md:flex-row md:items-center md:justify-around dark:bg-gray-950 gap-5">
 			<div className="flex flex-col items-start justify-start gap-5">
-				<h3 className="dark:text-white font-bold">Links</h3>
 				<div className="flex flex-wrap w-72 gap-2 dark:text-white ">
 					{links.map((link) => {
 						return (

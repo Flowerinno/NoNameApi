@@ -23,7 +23,7 @@ export { prisma };
 prisma.user
 	.findUnique({
 		where: {
-			email: "akellastoopi@gmail.com",
+			email: "admin@gmail.com",
 		},
 	})
 	.then((user) => {
@@ -35,7 +35,7 @@ prisma.user
 		prisma.user.create({
 			//admin
 			data: {
-				email: "akellastoopi@gmail.com",
+				email: "admin@gmail.com",
 				name: "Aleksandr",
 				password: bcrypt.hashSync("1234", 10),
 				role: "ADMIN",
@@ -45,7 +45,7 @@ prisma.user
 		prisma.user.create({
 			//non-admin
 			data: {
-				email: "test@gmail.com",
+				email: "user@gmail.com",
 				name: "Test",
 				password: bcrypt.hashSync("1234", 10),
 			},

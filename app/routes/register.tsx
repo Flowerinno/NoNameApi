@@ -4,6 +4,9 @@ import { Link, useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
+import googleBtn from "../assets/images/google.png";
+import { SocialsProvider } from "remix-auth-socials";
+import { Social } from "~/components";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userId = await authenticateUser(request);
@@ -41,9 +44,9 @@ export default function Signup() {
 
 	useEffect(() => {
 		if (data?.status && data?.status !== 201) {
-			setErrors("Something went wrong");
+			setErrors(data?.message);
 		}
-	}, [data?.status]);
+	}, [data?.status, data?.message]);
 
 	if (data?.status === 201) {
 		return (
@@ -65,10 +68,14 @@ export default function Signup() {
 	}
 
 	return (
-		<>
+		<div className="flex flex-col items-center justify-center min-h-screen">
+			<div className="flex flex-row items-center justify-center w-full bg-gray-100  dark:bg-black dark:text-white gap-5 p-2">
+				<Social provider="google" />
+				<Social provider="github" />
+			</div>
 			<fetcher.Form
-				method="post"
-				className="text-2xl flex flex-col items-center justify-center min-h-screen md:text-4xl bg-gray-100 gap-5  dark:bg-black dark:text-white"
+				method="POST"
+				className="flex flex-col items-center flex-1  justify-start text-sm md:text-2xl bg-gray-100 gap-5 dark:bg-black dark:text-white w-full p-5"
 			>
 				{errors && <p className="text-red-500">{errors}</p>}
 				<input
@@ -91,14 +98,10 @@ export default function Signup() {
 					placeholder="password"
 					required
 				/>
-				<button
-					type="submit"
-					onClick={() => setErrors("")}
-					className="rounded-xl border-2 p-2 w-40"
-				>
+				<button type="submit" className="rounded-xl border-2 p-2 w-40">
 					register
 				</button>
 			</fetcher.Form>
-		</>
+		</div>
 	);
 }

@@ -103,7 +103,7 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body style={{ position: "relative" }}>
+			<body style={{ position: "relative", minHeight: "100vh" }}>
 				<CookieBanner />
 				<Header
 					userData={data.userData}

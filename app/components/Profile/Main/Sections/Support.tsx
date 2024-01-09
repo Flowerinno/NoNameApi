@@ -1,4 +1,4 @@
-import GithubIcon from "../../../../assets/images/github.png";
+import GithubIcon from "../../../../assets/images/github-black.png";
 import LinkedInIcon from "../../../../assets/images/linkedin.png";
 import DiscordIcon from "../../../../assets/images/discord.png";
 
