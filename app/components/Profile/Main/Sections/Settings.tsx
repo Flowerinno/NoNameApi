@@ -26,9 +26,10 @@ export const Settings = () => {
 		}
 	};
 
+	const data = fetcher.data as { message: string };
 	return (
 		<>
-			{fetcher.data && <h2 className="font-bold">profile is updated</h2>}
+			{fetcher.data && <h2 className="font-bold">{data.message}</h2>}
 			<fetcher.Form
 				action="/settings"
 				method="POST"
@@ -58,6 +59,7 @@ export const Settings = () => {
 						/>
 					</li>
 				</ul>
+
 				<button
 					className="border-2 border-transparent hover:text-green-500 hover:border-2 hover:border-green-500 p-1 rounded-md w-24"
 					type="submit"

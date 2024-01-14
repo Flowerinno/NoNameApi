@@ -4,8 +4,6 @@ import { Link, useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { authenticateUser, registerUser } from "~/server/auth/auth.server";
 import { commitSession } from "~/server/session/session.server";
-import googleBtn from "../assets/images/google.png";
-import { SocialsProvider } from "remix-auth-socials";
 import { Social } from "~/components";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

@@ -7,7 +7,7 @@ export const commitUserSession = async (user: User) => {
 	session.set("userId", user.id);
 	session.set("name", user.name);
 	session.set("email", user.email);
-	session.set("isSubscribed", user.isSubscribed);
+	session.set("apiKey", user.api_key);
 
 	return session;
 };

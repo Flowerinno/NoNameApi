@@ -7,9 +7,14 @@ import { E_Routes } from "~/types";
 interface HeaderProps {
 	isAuthenticated?: boolean;
 	userData: any;
+	isError?: boolean;
 }
 
-export const Header = ({ userData, isAuthenticated = false }: HeaderProps) => {
+export const Header = ({
+	userData,
+	isAuthenticated = false,
+	isError = false,
+}: HeaderProps) => {
 	const [themeIcon, setThemeIcon] = useState("");
 	const location = useLocation();
 
@@ -61,22 +66,26 @@ export const Header = ({ userData, isAuthenticated = false }: HeaderProps) => {
 				<Link className={styles.link} to={E_Routes.docs}>
 					docs
 				</Link>
-				{!isAuthenticated ? (
+				{!isError && (
 					<>
-						<Link className={styles.link} to={E_Routes.login}>
-							sign in
-						</Link>
-						<Link className={styles.link} to={E_Routes.register}>
-							sign up
-						</Link>
-					</>
-				) : (
-					<>
-						<Link className={styles.link} to={E_Routes.profile}>
-							{isAuthenticated && userData?.name
-								? userData.name.toLowerCase()
-								: "profile"}
-						</Link>
+						{!isAuthenticated ? (
+							<>
+								<Link className={styles.link} to={E_Routes.login}>
+									sign in
+								</Link>
+								<Link className={styles.link} to={E_Routes.register}>
+									sign up
+								</Link>
+							</>
+						) : (
+							<>
+								<Link className={styles.link} to={E_Routes.profile}>
+									{isAuthenticated && userData?.name
+										? userData.name.toLowerCase()
+										: "profile"}
+								</Link>
+							</>
+						)}
 					</>
 				)}
 			</div>

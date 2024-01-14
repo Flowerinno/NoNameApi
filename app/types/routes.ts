@@ -10,6 +10,7 @@ export enum E_Routes {
 	about = "/about",
 	privacy = "/privacy",
 	terms = "/terms",
+	dashboard = "/dashboard?section=overview",
 	//DOCS
 	getting_started = "/docs?section=getting-started",
 	introduction = "/docs?section=introduction",

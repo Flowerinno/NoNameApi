@@ -5,11 +5,6 @@ import { E_Routes } from "~/types";
 
 const links = [
 	{
-		name: "Analytics",
-		link: E_Routes.analytics,
-		class: "text-purple-400",
-	},
-	{
 		name: "Logs",
 		link: E_Routes.logs,
 		class: "text-red-500",

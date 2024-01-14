@@ -4,7 +4,6 @@ type SessionData = {
 	userId: string;
 	name: string;
 	email: string;
-	isSubscribed: boolean;
 	apiKey: string;
 };
 

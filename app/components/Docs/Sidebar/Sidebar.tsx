@@ -13,10 +13,6 @@ const links = [
 		value: Sections.getting_started,
 	},
 	{
-		label: "analytics",
-		value: Sections.analytics,
-	},
-	{
 		label: "logs",
 		value: Sections.logs,
 	},

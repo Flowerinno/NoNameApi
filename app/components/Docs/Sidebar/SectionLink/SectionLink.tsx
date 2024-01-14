@@ -9,7 +9,7 @@ export const SectionLink = ({ value, title, activeSection }: Props) => {
 
 	return (
 		<button
-			className={`text-sm md:text-2xl p-2 border-2 border-gray-400 ${
+			className={`text-sm md:text-2xl border-2 md:rounded-tl-none md:rounded-bl-none md:rounded-tr-2xl md:rounded-br-lg border-gray-400 p-1 ${
 				isActive && "text-red-400"
 			} rounded-md hover:bg-slate-500 w-full animate-fade-down`}
 			value={value}

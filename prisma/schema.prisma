@@ -17,24 +17,46 @@ enum Role {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  googleId       String?  @unique
-  githubId       String?  @unique
-  email          String   @unique
-  name           String
-  password       String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  isUserVerified Boolean  @default(false)
-  isSubscribed   Boolean  @default(false)
-  role           Role     @default(USER)
-  apiKey         String   @unique @default(uuid())
-  apiCalls       Int      @default(0)
+  id               String   @id @default(uuid())
+  google_id        String?  @unique
+  github_id        String?  @unique
+  email            String   @unique
+  name             String
+  password         String?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  is_user_verified Boolean  @default(false)
+  role             Role     @default(USER)
+  api_key          String   @unique @default(uuid())
+  api_calls        Int      @default(0)
+  loggers          Logger[]
+
+  @@index([id])
+  @@index([api_key])
 }
 
-model Documentation {
-  id             String   @id @default(uuid())
-  markdownSchema String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+model Logger {
+  id          String   @id @default(uuid())
+  logger_name String   @unique
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  total_logs  Int      @default(0)
+  user_id     String
+  User        User     @relation(fields: [user_id], references: [id])
+  Logs        Logs[]
+
+  @@index([logger_name])
+  @@index([user_id])
+}
+
+model Logs {
+  id         String   @id @unique @default(uuid())
+  created_at DateTime @default(now())
+  message    String
+  level      String
+  logger_id  String
+  Logger     Logger   @relation(fields: [logger_id], references: [id])
+
+  @@index([logger_id])
+  @@index([id])
 }

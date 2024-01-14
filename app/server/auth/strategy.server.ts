@@ -38,14 +38,14 @@ authenticator.use(
 				update: {
 					name: profile.displayName,
 					email: profile.emails[0].value,
-					googleId: profile.id,
-					isUserVerified: true,
+					google_id: profile.id,
+					is_user_verified: true,
 				},
 				create: {
 					name: profile.displayName,
 					email: profile.emails[0].value,
-					googleId: profile.id,
-					isUserVerified: true,
+					google_id: profile.id,
+					is_user_verified: true,
 				},
 			});
 		}
@@ -80,14 +80,14 @@ let gitHubStrategy = new GitHubStrategy(
 			update: {
 				name: profile.displayName,
 				email: profile.emails[0].value,
-				githubId: profile.id,
-				isUserVerified: true,
+				github_id: profile.id,
+				is_user_verified: true,
 			},
 			create: {
 				name: profile.displayName,
 				email: profile.emails[0].value,
-				githubId: profile.id,
-				isUserVerified: true,
+				github_id: profile.id,
+				is_user_verified: true,
 			},
 		});
 	}

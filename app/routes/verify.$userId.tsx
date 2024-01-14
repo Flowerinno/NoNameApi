@@ -13,7 +13,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 		},
 	});
 
-	if (!user || user.isUserVerified) {
+	if (!user || user.is_user_verified) {
 		redirect(E_Routes.login, { status: 401 });
 	}
 
@@ -22,11 +22,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 			id: userId,
 		},
 		data: {
-			isUserVerified: true,
+			is_user_verified: true,
 		},
 	});
 
-	return { isUpdated: updatedUser.isUserVerified };
+	return { isUpdated: updatedUser.is_user_verified };
 };
 
 export default function EmailVerification() {

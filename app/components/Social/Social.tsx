@@ -1,8 +1,6 @@
 import { Form } from "@remix-run/react";
 import googleLogo from "../../assets/images/google.png";
 import githubWhiteLogo from "../../assets/images/github-white.png";
-import githubBlackLogo from "../../assets/images/github-black.png";
-import { useEffect } from "react";
 
 type currentProviders = "google" | "github";
 

@@ -1,3 +1,6 @@
+import { Link } from "@remix-run/react";
+import { E_Routes } from "~/types";
+
 interface userData {
 	userId?: string;
 	name?: string;
@@ -38,6 +41,11 @@ export const Profile = ({ userData }: ProfileProps) => {
 					>
 						{userData?.apiKey}
 					</span>
+				</li>
+				<li className="w-full flex flex-row items-center justify-center border-2 border-green-900 dark:border-green-400  p-2 rounded-sm cursor-pointer">
+					<Link to={E_Routes.dashboard} prefetch="intent">
+						logs dashboard
+					</Link>
 				</li>
 			</ul>
 		</div>

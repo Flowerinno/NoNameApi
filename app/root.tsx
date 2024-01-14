@@ -77,7 +77,7 @@ export const ErrorBoundary = ({ error }: { error: Error }) => {
 			</head>
 			<body style={{ minHeight: "100vh" }}>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					<Header userData={null} />
+					<Header userData={null} isError />
 					<img
 						style={{ height: "100vh", objectFit: "contain" }}
 						src={errorPage}
