@@ -28,6 +28,12 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 		});
 	}
 
+	await prisma.logger.deleteMany({
+		where: {
+			user_id: userId,
+		},
+	});
+
 	await prisma.user.delete({
 		where: {
 			id: userId,
