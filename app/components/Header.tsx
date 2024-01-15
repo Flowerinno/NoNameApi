@@ -81,7 +81,7 @@ export const Header = ({
 							<>
 								<Link className={styles.link} to={E_Routes.profile}>
 									{isAuthenticated && userData?.name
-										? userData.name.toLowerCase()
+										? userData.name.toLowerCase().split(" ")[0]
 										: "profile"}
 								</Link>
 							</>

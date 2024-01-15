@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Log, Logs } from "./types";
+import React, { useState } from "react";
+import { Logs } from "@prisma/client";
 import {
 	XAxis,
 	YAxis,
@@ -8,8 +8,9 @@ import {
 	Bar,
 	ResponsiveContainer,
 } from "recharts";
+import { formatDate } from "~/utils";
 
-type Props = Logs;
+type Props = { logs: Logs[] | [] };
 interface TickItem {
 	x: number;
 	y: number;
@@ -28,13 +29,12 @@ const renderCustomBarLabel = ({ x, y, width, value }: any) => {
 
 const renderCustomTick = ({ x, y, payload }: TickItem) => {
 	const date = new Intl.DateTimeFormat("en-US", {
-		hour: "2-digit",
+		hour: "numeric",
 		minute: "2-digit",
-		second: "2-digit",
 	}).format(new Date(payload.value));
 	return (
 		<text
-			x={x - 100}
+			x={x}
 			y={y + 10}
 			width={10}
 			height={10}
@@ -47,15 +47,15 @@ const renderCustomTick = ({ x, y, payload }: TickItem) => {
 };
 
 export const sortMethods = {
-	currentDate: (logs: Log[]) => {
+	currentDate: (logs: Logs[]) => {
 		return [...logs]
 			.sort((a, b) => {
 				return (
-					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+					new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
 				);
 			})
 			.filter((log) => {
-				const logDate = new Date(log.createdAt);
+				const logDate = new Date(log.created_at);
 				const currentDate = new Date();
 				const diff = currentDate.getTime() - logDate.getTime();
 				return diff < 86400000;
@@ -63,14 +63,65 @@ export const sortMethods = {
 	},
 };
 
+const CustomTooltip = ({
+	obj: { active, payload, label },
+}: {
+	obj: {
+		active?: boolean;
+		payload: any;
+		label: Date;
+	};
+}) => {
+	if (active && payload && payload.length) {
+		return (
+			<div className="custom-tooltip">
+				<p className="label">{`${formatDate(label)} : ${payload[0].value}`}</p>
+				<p className="desc">1 hour gap</p>
+			</div>
+		);
+	}
+
+	return null;
+};
+
+const groupLogsBy2Hours = (
+	logs: Logs[]
+): { timestamp: number; count: number }[] => {
+	const groupedLogs: { timestamp: number; count: number }[] = [];
+	const twoHoursInMilliseconds = 1 * 60 * 60 * 1000;
+
+	logs.forEach((log) => {
+		const logTimestamp = new Date(log.created_at).getTime();
+		const roundedTimestamp =
+			Math.floor(logTimestamp / twoHoursInMilliseconds) *
+			twoHoursInMilliseconds;
+
+		const existingGroup = groupedLogs.find(
+			(group) => group.timestamp === roundedTimestamp
+		);
+
+		if (existingGroup) {
+			existingGroup.count += 1;
+		} else {
+			groupedLogs.push({ timestamp: roundedTimestamp, count: 1 });
+		}
+	});
+
+	return groupedLogs;
+};
+
 export const ApiCallsWindow: React.FC<Props> = ({ logs }) => {
 	const sortedByDate = sortMethods.currentDate(logs);
-
+	const groupedLogs = groupLogsBy2Hours(sortedByDate);
 	const [chartWidth, setChartWidth] = useState(400);
 
+	const date = formatDate(new Date(), false);
+
 	return (
-		<div className="lg:w-5/12 rounded-md border-2 w-full p-2 flex flex-col">
-			<p className="font-bold self-end text-2xl">last api calls</p>
+		<div className="lg:w-5/12 w-full rounded-md border-2 p-2 flex flex-col">
+			<p className="font-bold self-end text-sm md:text-md">
+				last api calls for {date}
+			</p>
 			<ResponsiveContainer
 				width="100%"
 				height="100%"
@@ -81,12 +132,12 @@ export const ApiCallsWindow: React.FC<Props> = ({ logs }) => {
 						margin={{ left: -25, top: 20 }}
 						width={chartWidth}
 						height={440}
-						data={sortedByDate}
+						data={groupedLogs}
 					>
-						<XAxis dataKey="createdAt" tick={renderCustomTick} />
+						<XAxis dataKey="timestamp" tick={renderCustomTick} />
 						<YAxis />
 						<Bar
-							dataKey="id"
+							dataKey="count"
 							barSize={20}
 							fill="#9f9dbc"
 							label={renderCustomBarLabel}
@@ -97,6 +148,9 @@ export const ApiCallsWindow: React.FC<Props> = ({ logs }) => {
 								backgroundColor: "transparent",
 								zIndex: 0,
 							}}
+							content={({ active, payload, label }) => (
+								<CustomTooltip obj={{ active, payload, label }} />
+							)}
 							cursor={{ fill: "transparent" }}
 							viewBox={{ width: 50, height: 50 }}
 							itemStyle={{ color: "white", backgroundColor: "black" }}

@@ -1,4 +1,4 @@
-import { Logger } from "@prisma/client";
+import { Logger, Logs } from "@prisma/client";
 import {
 	json,
 	redirect,
@@ -6,7 +6,11 @@ import {
 	LoaderFunctionArgs,
 } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { CreateLogger, Overview } from "~/components/Dashboard/Sections";
+import {
+	CreateLogger,
+	LoggerComponent,
+	Overview,
+} from "~/components/Dashboard/Sections";
 import { prisma } from "~/server/db/db.server";
 import { destroySession, getSession } from "~/server/session/session.server";
 
@@ -36,10 +40,21 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 			user_id: userId,
 		},
 	})) as Logger[] | [];
-
 	let section = new URL(request.url).searchParams.get("section") ?? "overview";
 
-	return json({ loggers, section });
+	let logs: Logs[] | [] = [];
+	if (section !== "overview" && section !== "create") {
+		const logger = loggers.find((logger) => logger.logger_name === section);
+		if (logger) {
+			logs = await prisma.logs.findMany({
+				where: {
+					logger_id: logger.id,
+				},
+			});
+		}
+	}
+
+	return json({ loggers, section, logs });
 };
 export const action = async ({ request, params }: ActionFunctionArgs) => {
 	//setup webhook here on new logs
@@ -51,6 +66,7 @@ type Section = "overview" | "create";
 type LoaderReturnType = {
 	loggers: Logger[] | [];
 	section: Section;
+	logs: Logs[] | [];
 };
 
 const styles = {
@@ -61,14 +77,22 @@ const styles = {
 };
 
 export default function Dashboard() {
-	const { loggers, section } = useLoaderData() as LoaderReturnType;
+	const { loggers, section, logs } = useLoaderData() as LoaderReturnType;
 
 	const mocked = {
 		overview: <Overview loggers={loggers} />,
 		create: <CreateLogger />,
 	};
 
-	const renderSection = mocked[section as keyof typeof mocked];
+	let renderSection = mocked[section as keyof typeof mocked];
+
+	if (section !== "overview" && section !== "create") {
+		const logger = loggers.find((logger) => logger.logger_name === section);
+		if (logger) {
+			renderSection = <LoggerComponent logs={logs} />;
+		}
+	}
+
 	return (
 		<div className="dark:bg-black dark:text-white min-h-screen p-2 flex flex-col justify-start gap-5">
 			<Form className="flex flex-row items-start justify-start w-full overflow-y-hidden overflow-x-auto gap-1 md:gap-5 border-b-2 rounded-md">

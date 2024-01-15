@@ -1,7 +1,9 @@
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date, withTime: boolean = true) => {
 	const dateObj = new Date(date);
-	const day = dateObj.getDate();
-	const month = dateObj.getMonth() + 1;
+	const day = dateObj.getDate().toString().padStart(2, "0");
+	const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
 	const year = dateObj.getFullYear();
-	return `${day}/${month}/${year} - ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+	const formattedDate = `${day}/${month}/${year}`;
+	const dateWithTime = `${formattedDate} ${dateObj.toLocaleTimeString()}`;
+	return withTime ? dateWithTime : formattedDate;
 };
