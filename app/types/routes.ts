@@ -12,8 +12,9 @@ export enum E_Routes {
 	terms = "/terms",
 	dashboard = "/dashboard?section=overview",
 	//DOCS
-	getting_started = "/docs?section=getting-started",
+	getting_started = "/docs?section=getting_started",
 	introduction = "/docs?section=introduction",
 	logs = "/docs?section=logs",
 	analytics = "/docs?section=analytics",
+	npm_package = "https://www.npmjs.com/package/nna-sdk",
 }

@@ -2,7 +2,7 @@ import { Sidebar } from "~/components/Docs";
 import { Main } from "~/components/Docs";
 
 import { LoaderFunctionArgs, json, ActionFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import { E_Routes } from "~/types";
 import { MobileSidebar } from "~/components/Docs/Sidebar/MobileSidebar";
 import { useEffect, useState } from "react";
@@ -22,6 +22,8 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 export default function Docs() {
 	const [isMobile, setIsMobile] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+
+	const submit = useSubmit();
 
 	const handleSidebar = () => {
 		setIsOpen(!isOpen);
@@ -45,8 +47,16 @@ export default function Docs() {
 		};
 	}, []);
 
+	const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
+		submit(e.currentTarget);
+		setIsOpen(false);
+	};
+	console.log(isOpen);
 	return (
-		<Form className="flex flex-col items-center md:flex-row md:items-start justify-center w-full bg-gray-100  dark:bg-black dark:text-white">
+		<Form
+			className="flex flex-col items-center md:flex-row md:items-start justify-center w-full bg-gray-100  dark:bg-black dark:text-white"
+			onSubmit={handleSubmmit}
+		>
 			{isMobile ? (
 				<MobileSidebar
 					handleSidebar={handleSidebar}

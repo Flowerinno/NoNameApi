@@ -1,5 +1,4 @@
-import { Sections } from "../Sidebar/enums";
-import { Introduction } from "./Sections/Introduction";
+import { Introduction, GettingStarted, Logs } from "./Sections";
 
 interface Props {
 	section: string;
@@ -7,9 +6,8 @@ interface Props {
 }
 
 const mocked = {
-	getting_started: <div>Getting started</div>,
-	logs: <div>Logs</div>,
-	analytics: <div>Analytics</div>,
+	getting_started: <GettingStarted />,
+	logs: <Logs />,
 	introduction: <Introduction />,
 };
 
@@ -21,7 +19,6 @@ export const Main = ({ section, isSidebarOpen }: Props) => {
 	return (
 		<div className="flex flex-col items-center justify-start md:items-start min-h-screen w-full md:w-9/12 p-2">
 			{mocked[section as keyof typeof mocked]}
-			{<button>next</button>}
 		</div>
 	);
 };
