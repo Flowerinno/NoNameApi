@@ -19,7 +19,7 @@ export const Introduce = () => {
 			</h1>
 			<div className="flex flex-col gap-5 md:gap-9 items-start">
 				<p>
-					<strong>No Name API </strong> is a free service for everyone and
+					<strong>No Name API </strong> is The Logger service for everyone and
 					everywhere. You can use it for free without any limits.
 				</p>
 				<Cards />

@@ -46,17 +46,6 @@ export const LogsWindow = ({ logs }: LogsWindowProps) => {
 		navigate(path + "?section=" + params, { replace: true });
 	};
 
-	if (logs.length === 0) {
-		return (
-			<div
-				className="dark:bg-black dark:text-white w-full 
-			lg:w-5/12 rounded-md border-2 h-96 flex items-center justify-center"
-			>
-				<h3>no logs</h3>
-			</div>
-		);
-	}
-
 	useEffect(() => {
 		if (date) {
 			const filtered = logs.filter((log) => {
