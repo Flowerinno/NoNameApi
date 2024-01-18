@@ -42,8 +42,8 @@ export const GettingStarted = () => {
 				<code className="w-44">{`async function demo() {
     try {
         // Potential error
-    } catch (e) {
-        await nna.captureException({message: 'Logged', level: "info"});
+    } catch (error) {
+        await nna.captureException({message: error, level: "info"});
     }
 }`}</code>
 			</pre>
