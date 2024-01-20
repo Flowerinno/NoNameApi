@@ -63,23 +63,35 @@ export const Header = ({
 						alt="theme"
 					/>
 				</button>
-				<Link className={styles.link} to={E_Routes.docs}>
+				<Link prefetch="intent" className={styles.link} to={E_Routes.docs}>
 					docs
 				</Link>
 				{!isError && (
 					<>
 						{!isAuthenticated ? (
 							<>
-								<Link className={styles.link} to={E_Routes.login}>
+								<Link
+									prefetch="intent"
+									className={styles.link}
+									to={E_Routes.login}
+								>
 									sign in
 								</Link>
-								<Link className={styles.link} to={E_Routes.register}>
+								<Link
+									prefetch="intent"
+									className={styles.link}
+									to={E_Routes.register}
+								>
 									sign up
 								</Link>
 							</>
 						) : (
 							<>
-								<Link className={styles.link} to={E_Routes.profile}>
+								<Link
+									prefetch="intent"
+									className={styles.link}
+									to={E_Routes.profile}
+								>
 									{isAuthenticated && userData?.name
 										? userData.name.toLowerCase().split(" ")[0]
 										: "profile"}

@@ -8,11 +8,12 @@ interface SocialProps {
 	provider: currentProviders;
 }
 
+const Logos = {
+	google: googleLogo,
+	github: githubWhiteLogo,
+};
+
 export const Social = ({ provider }: SocialProps) => {
-	const Logos = {
-		google: googleLogo,
-		github: githubWhiteLogo,
-	};
 
 	return (
 		<Form

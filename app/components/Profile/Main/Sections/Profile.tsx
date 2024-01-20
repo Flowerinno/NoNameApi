@@ -43,7 +43,7 @@ export const Profile = ({ userData }: ProfileProps) => {
 					</span>
 				</li>
 				<li className="w-full flex flex-row items-center justify-center border-2 border-green-900 dark:border-green-400  p-2 rounded-sm cursor-pointer">
-					<Link to={E_Routes.dashboard} prefetch="intent">
+					<Link to={E_Routes.dashboard} prefetch="render">
 						logs dashboard
 					</Link>
 				</li>

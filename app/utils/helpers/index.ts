@@ -1,1 +1,2 @@
-export { formatDate } from './formatDate';
+export { formatDate } from "./formatDate";
+export { getDayAgo } from "./getDayAgo";

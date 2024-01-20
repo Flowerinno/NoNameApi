@@ -13,6 +13,7 @@ import {
 } from "~/components/Dashboard/Sections";
 import { prisma } from "~/server/db/db.server";
 import { destroySession, getSession } from "~/server/session/session.server";
+import { getDayAgo } from "~/utils";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"));
@@ -35,16 +36,18 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 		});
 	}
 
+	let section = new URL(request.url).searchParams.get("section") ?? "overview";
+
 	const loggers = (await prisma.logger.findMany({
 		where: {
 			user_id: userId,
 		},
 	})) as Logger[] | [];
-	let section = new URL(request.url).searchParams.get("section") ?? "overview";
 
 	let logs: Logs[] | [] = [];
 	if (section !== "overview" && section !== "create") {
 		const logger = loggers.find((logger) => logger.logger_name === section);
+
 		if (logger) {
 			logs = await prisma.logs.findMany({
 				where: {

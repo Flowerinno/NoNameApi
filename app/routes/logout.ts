@@ -3,10 +3,10 @@ import { destroySession, getSession } from "~/server/session/session.server";
 
 import { E_Routes } from "~/types";
 
-export const action = async ({ request, params }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"));
 
-	redirect(E_Routes.home, {
+	return redirect(E_Routes.home, {
 		headers: {
 			"Set-Cookie": await destroySession(session),
 		},
