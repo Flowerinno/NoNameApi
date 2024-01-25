@@ -14,6 +14,7 @@ import {
 import { prisma } from "~/server/db/db.server";
 import { destroySession, getSession } from "~/server/session/session.server";
 import { getDayAgo } from "~/utils";
+import localForage from "localforage";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"));
@@ -35,8 +36,10 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 			},
 		});
 	}
+	const url = new URL(request.url);
 
-	let section = new URL(request.url).searchParams.get("section") ?? "overview";
+	let date = url.searchParams.get("date") ?? new Date();
+	let section = url.searchParams.get("section") ?? "overview";
 
 	const loggers = (await prisma.logger.findMany({
 		where: {
@@ -48,10 +51,16 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	if (section !== "overview" && section !== "create") {
 		const logger = loggers.find((logger) => logger.logger_name === section);
 
+		const gte = new Date(new Date(date).setHours(0, 0, 0, 0));
+		const lte = new Date(new Date(date).setHours(23, 59, 59, 999));
 		if (logger) {
 			logs = await prisma.logs.findMany({
 				where: {
 					logger_id: logger.id,
+					created_at: {
+						gte,
+						lte,
+					},
 				},
 			});
 		}
@@ -59,8 +68,8 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
 	return json({ loggers, section, logs });
 };
+
 export const action = async ({ request, params }: ActionFunctionArgs) => {
-	//setup webhook here on new logs
 	return json({ message: "Hello World" });
 };
 
@@ -143,14 +152,6 @@ export default function Dashboard() {
 			</Form>
 
 			<div className="w-full">{renderSection}</div>
-			{/* <LogsWindow logs={logs} />
-			<ApiCallsWindow logs={logs} /> */}
-			{/* <div className="dark:bg-black dark:text-white w-full lg:w-5/12 rounded-md h-96 overflow-scroll overflow-x-hidden border-2">
-				123
-			</div>
-			<div className="dark:bg-black dark:text-white w-full lg:w-5/12 rounded-md h-96 overflow-scroll overflow-x-hidden border-2">
-				123
-			</div> */}
 		</div>
 	);
 }

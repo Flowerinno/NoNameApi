@@ -9,6 +9,8 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import { formatDate } from "~/utils";
+import { date } from "zod";
+import { useLocation } from "@remix-run/react";
 
 type Props = { logs: Logs[] | [] };
 interface TickItem {
@@ -75,7 +77,9 @@ const CustomTooltip = ({
 	if (active && payload && payload.length) {
 		return (
 			<div className="custom-tooltip">
-				<p className="label">{`${formatDate(label)} : ${payload[0].value}`}</p>
+				<p className="label">{`${formatDate(label, false)} - count: ${
+					payload[0].value
+				}`}</p>
 				<p className="desc">1 hour gap</p>
 			</div>
 		);
@@ -111,11 +115,22 @@ const groupLogsBy2Hours = (
 };
 
 export const ApiCallsWindow: React.FC<Props> = ({ logs }) => {
-	const sortedByDate = sortMethods.currentDate(logs);
-	const groupedLogs = groupLogsBy2Hours(sortedByDate);
+	const location = useLocation();
+	const groupedLogs = groupLogsBy2Hours(logs);
 	const [chartWidth, setChartWidth] = useState(400);
 
-	const date = formatDate(new Date(), false);
+	const dateParam = new URLSearchParams(location.search).get("date") ?? "";
+	const date = formatDate(dateParam ? new Date(dateParam) : new Date(), false);
+
+	if (groupedLogs.length === 0) {
+		return (
+			<div className="lg:w-5/12 w-full rounded-md border-2 p-2 flex flex-col">
+				<p className="font-bold self-center text-sm md:text-md">
+					No API calls for {date}
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="lg:w-5/12 w-full rounded-md border-2 p-2 flex flex-col">
