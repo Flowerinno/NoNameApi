@@ -42,6 +42,18 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		return json({ message: "Logger with such name already exists" });
 	}
 
+	const maxLoggers = await prisma.logger.count({
+		where: {
+			user_id: userId,
+		},
+	});
+
+	if (maxLoggers >= 10) {
+		return json({
+			message: "You can have only 10 loggers, contact to inrease the quote.",
+		});
+	}
+
 	const logger = await prisma.logger.create({
 		data: {
 			logger_name,

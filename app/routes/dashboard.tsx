@@ -15,6 +15,7 @@ import { prisma } from "~/server/db/db.server";
 import { destroySession, getSession } from "~/server/session/session.server";
 import { getDayAgo } from "~/utils";
 import localForage from "localforage";
+import { DeleteLogger } from "~/components/Dashboard";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"));
@@ -73,7 +74,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 	return json({ message: "Hello World" });
 };
 
-type Section = "overview" | "create";
+type Section = "overview" | "create" | "delete";
 
 type LoaderReturnType = {
 	loggers: Logger[] | [];
@@ -94,6 +95,7 @@ export default function Dashboard() {
 	const mocked = {
 		overview: <Overview loggers={loggers} />,
 		create: <CreateLogger />,
+		delete: <DeleteLogger />,
 	};
 
 	let renderSection = mocked[section as keyof typeof mocked];
@@ -148,6 +150,18 @@ export default function Dashboard() {
 					}
 				>
 					create
+				</button>
+				<button
+					name="section"
+					type="submit"
+					value="delete"
+					className={
+						section === "delete"
+							? styles.activeSectionButton
+							: styles.sectionButton
+					}
+				>
+					delete
 				</button>
 			</Form>
 

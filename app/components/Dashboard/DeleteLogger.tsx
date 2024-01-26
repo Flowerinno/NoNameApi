@@ -5,7 +5,7 @@ type FetcherData = {
 	message: string;
 };
 
-export const CreateLogger = () => {
+export const DeleteLogger = () => {
 	const [errorMessage, setErrorMessage] = useState("");
 	const fetcher = useFetcher();
 	const fetcherData = fetcher.data as FetcherData;
@@ -21,12 +21,12 @@ export const CreateLogger = () => {
 	return (
 		<fetcher.Form
 			method="POST"
-			action="/create/logger"
+			action="/delete/logger"
 			className="flex flex-col items-center justify-center gap-5 text-sm md:text-2xl"
 		>
 			{errorMessage && <h3 className="text-center">{errorMessage}</h3>}
 			<label htmlFor="logger_name" className="text-center">
-				Fill out the name of your logger (must be unique)
+				Fill out the name of your logger to delete it
 			</label>
 			<input
 				className="border-2 rounded-md p-2 text-black"
@@ -36,7 +36,7 @@ export const CreateLogger = () => {
 				id="logger_name"
 			/>
 			<button type="submit" className="border-2 rounded-md p-1 w-40">
-				create logger
+				delete logger
 			</button>
 		</fetcher.Form>
 	);
